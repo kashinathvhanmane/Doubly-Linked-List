@@ -1,0 +1,380 @@
+#include<iostream>
+
+using namespace std;
+
+
+
+struct node
+{
+        int data;
+        struct node *prev;
+        struct node *next;
+};
+
+
+
+class DoublyLinkList
+{
+        public:
+        struct node *root=NULL;
+        
+        void insertatBegining(int val)
+        {
+                struct node *temp;
+                temp=new node;
+                temp->prev=NULL;
+                temp->data=val;
+                temp->next=NULL;
+                
+                if(root==NULL)
+                {
+                        root=temp;
+                }
+                else
+                {
+                        temp->next=root;
+                        root->prev=temp->next;
+                        root=temp;
+                        cout<<"\nnew Inserted at begning sucessfully....";
+                 }
+       }
+       
+       
+       void insertatEnd(int data)
+       {
+                struct node *temp;
+                temp=new node;
+                
+                temp->next=NULL;
+                temp->data=data;
+                temp->prev=NULL;
+                
+                if(root==NULL)
+                {
+                        root=temp;
+                        
+                }
+                else
+                {
+                        struct node *p;
+                        p=root;
+                        
+                        while(p->next!=NULL)
+                        {
+                                p=p->next;
+                        }
+                        
+                       p->next=temp;
+                       temp->prev=p->next;
+                       
+                        cout<<"new node inserted at end sucessfully...";
+                 }
+                       
+         }  
+         
+         
+         void insert_In_Between(int data)
+         {
+                struct node *temp;
+                
+                temp=new node;
+                
+                temp->prev=NULL;
+                temp->data=data;
+                temp->next=NULL;
+                
+              
+                struct node *p;
+                p=root;
+                int count=0;
+                while(p!=NULL)
+                {
+                        p=p->next;
+                        count++;
+                }
+                cout<<"\nlength of linked list is:"<<count;
+                
+                if(count>=2)
+                {
+                        cout<<"\nEnter position you want to add element:";
+                        int pos;
+                        cin>>pos;
+                        
+                        if(pos>count)
+                        {
+                                cout<<"\nnot possible to add element:";
+                        }
+                        else
+                        {
+                                struct node *first;
+                                struct node *second;
+                                
+                                first=root;
+                                
+                                int i=0;
+                                
+                                while(i!=pos)
+                                {
+                                        first=first->next;
+                                        i++;
+                                }
+                                cout<<"value of i is:"<<i;
+                                second=first->next;
+                                first->next=temp;
+                                temp->prev=first;
+                                temp->next=second;
+                                second->prev=temp;
+                                cout<<"\nnew node inserted at :"<<pos;
+                       }
+                }
+         }
+    
+    
+    void deleteatBeningin()
+    {
+        struct node *temp;
+        temp=root;
+        
+        if(root==NULL)
+        {
+                cout<<"deletion is not possible...";
+                return;
+         }
+          
+        
+        root=root->next;
+        root->prev=NULL;
+        free(temp);
+        cout<<"node deleted sucessfully...";
+        
+        
+     }
+     
+     
+     void deletefromEnd()
+     {
+        struct node *temp;
+        
+        
+        if(root==NULL)
+        {
+                cout<<"deletion is not possible.....";
+        }
+        else
+        {
+                struct node *p;
+                p=root;
+              
+                while(p->next->next!=NULL)
+                {
+                        p=p->next;
+                       
+                        
+                }
+                
+                p->prev->next=NULL;
+                      
+               cout<<"last node deleted sucessfully..";
+          }
+       }
+        
+       
+       void deleteInbetween()
+       {
+                struct node *p;
+                p=root;
+                int count=0;
+                
+                while(p!=NULL)
+                {
+                        p=p->next;
+                        count++;
+                        
+                }
+                
+                cout<<"lenght of linked list:"<<count;
+                
+                if(count>2)
+                {
+                        cout<<"\nEnter the position you want to delete element:";
+                        int pos;
+                        cin>>pos;
+                        
+                        if(pos>count)
+                        {
+                                cout<<"deletion is not possible.....";
+                         }
+                         else
+                         {
+                                struct node *first;
+                                struct node *second;
+                                int i=0;
+                                first=root;
+                                while(i!=pos)
+                                {
+                                        first=first->next;
+                                        i++;
+                                }
+                              second=first->next->next;
+                             
+                              
+                              struct node *temp;
+                              temp=first->next;
+                            
+                              
+                              second->prev=temp->prev;
+                              first->next=temp->next;
+                              free(temp);
+                              
+                              
+                              
+                        }
+              }
+              else
+              {
+                cout<<"please enter valid position.......";
+              }
+        }
+                                
+             
+             
+       void updateNode(int data)
+       {
+                
+                struct node *temp;
+                temp=new node;
+                
+                temp->prev=NULL;
+                temp->data= data;
+                temp->next=NULL;
+                
+                if(root==NULL)
+                {
+                        root=temp;
+                        cout<<"node added at first position...";
+                }
+                else
+                {
+                        cout<<"Entre position you want to update element:";
+                        int pos;
+                        cin>>pos;
+                        struct node *p;
+                        p=root;
+                        int count=0;
+                        while(p!=NULL)
+                        {
+                                p=p->next;
+                                count++;
+                         }
+                         
+                         cout<<"length of linked list:"<<count;
+                         
+                         if(count<pos)
+                         {
+                                cout<<"please enter valid position.....";
+                         }
+                         else
+                         {
+                                struct node *q;
+                                q=root;
+                                int i=0;
+                                
+                                while(i!=pos)
+                                {
+                                        q=q->next;
+                                        i++;
+                                 }
+                                 q->data=temp->data;
+                                 cout<<"node updated sucessfully........";
+                          }
+                 }
+          }               
+                                             
+                                        
+                        
+        
+                                
+                                
+                                
+                
+       
+       
+       void printLinkList()
+       {
+                struct node *p;
+                p=root;
+                
+                while(p!=NULL)
+                {
+                        cout<<"\t"<<p->data;
+                        p=p->next;
+                }
+      }
+               
+};
+
+int main()
+{
+        DoublyLinkList d1;
+        
+        while(true)
+        {
+                cout<<"\n1.insert at begining:";
+                cout<<"\n2. display:";
+                cout<<"\n3.insert at end:";
+                cout<<"\n4.insert in between:";
+                cout<<"\n5.delete from begining:";
+                cout<<"\n6.delete from end:";
+                cout<<"\n7.delete in between:";
+                cout<<"\n8. updated node:";
+                cout<<"\n9.exit:";
+                cout<<"\nEnter your choice:";
+                int ch;
+                cin>>ch;
+                
+                switch(ch)
+                {
+                        case 1:
+                        cout<<"\nEnter data:";
+                        int data;
+                        cin>>data;
+                        d1.insertatBegining(data);
+                        break;
+                        case 2:
+                        d1.printLinkList();
+                        break;
+                        case 3:
+                        cout<<"Enter data:";
+                        int data1;
+                        cin>>data1;
+                        d1.insertatEnd(data1);
+                        break;
+                        case 4:
+                        cout<<"Enter data:";
+                        int data2;
+                        cin>>data2;
+                        d1.insert_In_Between(data2);
+                        break;
+                        
+                        case 5:
+                        d1.deleteatBeningin();
+                        break;
+                        case 6:
+                        d1.deletefromEnd();
+                        break;
+                        case 7:
+                        d1.deleteInbetween();
+                        break;
+                        case 8:
+                        cout<<"Enter new data:";
+                        int data3;
+                        cin>>data3;
+                        
+                        d1.updateNode(data3);
+                        break;
+                        case 9:
+                        return 0;
+                  }
+        }
+  return 0;      
+ }
